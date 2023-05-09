@@ -1,0 +1,52 @@
+﻿@model CRUD_ASp_MVC_CORE.Models.EmployeeViewModel
+
+@{
+	ViewData["Title"] = "Delete Employee";
+	var ErrorMessage = TempData["Error Message"]?.ToString();
+}
+<h3>@ViewData["Title"]</h3>
+<hr />
+@if (!string.IsNullOrWhiteSpace(ErrorMessage))
+{
+	<div class="alert alert-success">
+		<strong>Error !</strong>@ErrorMessage
+	</div>
+	<button type="button" class="btn-close float-end" data-bs-dissmiss="alert"></button>
+}
+<form action="Delete" method="post" autocomplete="off">
+	<div clss="mb-3">
+		<label class="form-control">Id</label>
+		<input type="text" class="form-control" asp-for="ID" readonly />
+	</div>
+	<div class="mb-3">
+		<label class="form-control">First Name</label>
+		<input type="Text" class="form-control" asp-for="FirstName" readonly />
+		
+	</div>
+	<div class="mb-3">
+		<label class="form-control">Last Name</label>
+		<input type="Text" class="form-control" asp-for="LastName" readonly />
+		
+	</div>
+	<div class="mb-3">
+		<label class="form-control">Date Of Birth</label>
+		<input type="date" class="form-control" asp-for="DateOfBirth"  readonly/>
+		<span asp-validation-for="DateOfBirth" class="text-danger"></span>
+	</div>
+	<div class="mb-3">
+		<label class="form-control">E-Mail</label>
+		<input type="Text" class="form-control" asp-for="Email" readonly />
+		
+	</div>
+	<div class="mb-3">
+		<label class="form-control">Salary</label>
+		<div class="input-group">
+			<span class="input-group-text">$</span>
+			<input type="Text" class="form-control" asp-for="Salary" readonly />
+		</div>
+		
+	</div>
+	<div class="d-grid">
+		<button type="submit" class="btn btn-danger" onclick="return confirm('are you sure to delete employee :@Model.FullName')">Delete</button>
+	</div>
+</form>

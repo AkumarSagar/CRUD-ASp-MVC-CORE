@@ -1,0 +1,79 @@
+﻿@model List<CRUD_ASp_MVC_CORE.Models.EmployeeViewModel>
+
+
+
+@{
+	ViewData["Title"] = "Employee Details";
+	var SuccessMessage = TempData["Success Message"]?.ToString();
+	var ErrorMessage = TempData["Error Message"]?.ToString();
+}
+<h3>@ViewData["Title"]</h3>
+<hr />
+@if(!string.IsNullOrWhiteSpace(SuccessMessage))
+{
+	<div class="alert alert-success">
+		<strong>success !</strong>@SuccessMessage
+		<button type="button" class="btn-close float-end" data-bs-dissmiss="alert"></button>
+	</div>
+	
+}
+else if (!string.IsNullOrWhiteSpace(ErrorMessage))
+{
+	<div class="alert alert-success">
+		<strong>Error!</strong>@ErrorMessage
+		<button type="button" class="btn-close float-end" data-bs-dissmiss="alert" aria-label="close"></button>
+	</div>
+	
+	
+}
+<form>
+	<button asp-action="Create" asp-controller="Employee" class="btn btn-primary">Create Employee</button>
+	<table class="table table-responsive table-hover">
+		<thead>
+			<tr class="table-active">
+				<th class="text-center">Id</th>
+				<th class="text-center">Name</th>
+				<th class="text-center">Date Of Birth</th>
+				<th class="text-center">E-Mail</th>
+				<th class="text-center">Salary</th>
+				<th class="text-center">Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			@if (
+					Model != null && Model.Any())
+			{
+				foreach (var Employee in Model)
+				{
+					<tr>
+						<td class="text-center">@Employee.ID</td>
+						<td class="text-center">@Employee.FullName</td>
+						<td class="text-center">@Employee.DateOfBirth.ToString("MM/dd/yyyy")</td>
+						<td class="text-center">@Employee.Email</td>
+						<td class="text-center">@Employee.Salary</td>
+						<td>
+							<div class="btn btn-group btn-group-sm">
+								<a asp-controller="Employee" asp-action="Edit" asp-route-id="@Employee.ID" class="btn btn-primary">Edit</a>
+								<a asp-controller="Employee" asp-action="Delete" asp-route-id="@Employee.ID" class="btn btn-danger">Delete</a>
+
+							</div>
+
+						</td>
+
+					</tr>
+				}
+			}
+			else
+			{
+				<tr>
+					<td>
+						<div class="col-6">
+							No Employee Available at this Moments ...!
+						</div>
+					</td>
+				</tr>
+			}
+		</tbody>
+
+	</table>
+</form>
